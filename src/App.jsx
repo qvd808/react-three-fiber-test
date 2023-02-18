@@ -1,25 +1,26 @@
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import Box from "./component/Box";
-import { OrthographicCamera, OrbitControls } from "@react-three/drei";
+import { OrthographicCamera, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
 import { useState } from "react";
 
 function App() {
   const [isDragging, setIsDragging] = useState(false);
-  const floorPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 
   return (
     <div className="App">
       <div className="canvas">
         <Canvas>
+          <PerspectiveCamera/>
           <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-          <Box setIsDragging={setIsDragging} floorPlane={floorPlane} />
+          <pointLight position={[10, 5, 5]} />
+          <Box setIsDragging={setIsDragging}/>
 
-          <OrthographicCamera makeDefault zoom={50} position={[0, 40, 200]} />
+          {/* <OrthographicCamera makeDefault zoom={50} position={[0, 40, 200]} /> */}
 
-          <OrbitControls minZoom={10} maxZoom={50} enabled={!isDragging} />
+          <OrbitControls enableZoom={false} enablePan={false} />
+          <axesHelper args={[5]}/>
         </Canvas>
       </div>
 

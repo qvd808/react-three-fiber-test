@@ -3,52 +3,26 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useDrag } from "@use-gesture/react";
 import { animated, useSpring } from "@react-spring/three";
 import * as THREE from "three";
+import { BoxGeometry } from "three";
 
-export default function Box({ setIsDragging, floorPlane }) {
-  const [pos, setPos] = useState([0, 1, 0]);
-  const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
+export default function Box() {
+ 
+  // const boxRef = useRef()
 
-  let planeIntersectPoint = new THREE.Vector3();
-
-  const dragObjectRef = useRef();
-
-  const [spring, api] = useSpring(() => ({
-    // position: [0, 0, 0],
-    position: pos,
-    scale: 1,
-    rotation: [0, 0, 0],
-    config: { friction: 10 },
-  }));
-
-  const bind = useDrag(
-    ({ active, movement: [x, y], timeStamp, event }) => {
-      if (active) {
-        event.ray.intersectPlane(floorPlane, planeIntersectPoint);
-        setPos([planeIntersectPoint.x, 1.5, planeIntersectPoint.z]);
-      }
-
-      setIsDragging(active);
-
-      api.start({
-        // position: active ? [x / aspect, -y / aspect, 0] : [0, 0, 0],
-        position: pos,
-        scale: active ? 1.2 : 1,
-        rotation: [y / aspect, x / aspect, 0],
-      });
-      return timeStamp;
-    },
-    { delay: true }
-  );
+  useFrame((e) => {
+    // boxRef.current.rotation.y += 0.01;
+    // boxRef.current.rotation.x += 0.01;
+  })
 
   return (
-    <animated.mesh {...spring} {...bind()} castShadow>
-      <dodecahedronBufferGeometry
-        ref={dragObjectRef}
-        attach="geometry"
-        args={[1.4, 0]}
-      />
-      <meshNormalMaterial attach="material" />
-    </animated.mesh>
+    <mesh
+      scale={1.5}
+      // ref={boxRef}
+      // onPointerOver={(e) => setIsDragging(true) }
+      // onPointerOut={(e) => setIsDragging(false) }
+    >
+      <boxGeometry args={[1, 1, 1]}/>
+      <meshPhongMaterial color={"hotpink"} />
+    </mesh>
   );
 }
