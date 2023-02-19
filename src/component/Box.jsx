@@ -5,7 +5,7 @@ import { animated, useSpring } from "@react-spring/three";
 import * as THREE from "three";
 import { BoxGeometry } from "three";
 
-export default function Box() {
+export default function Box({setHover}) {
  
   // const boxRef = useRef()
 
@@ -18,8 +18,8 @@ export default function Box() {
     <mesh
       scale={1.5}
       // ref={boxRef}
-      // onPointerOver={(e) => setIsDragging(true) }
-      // onPointerOut={(e) => setIsDragging(false) }
+      onPointerOver={(e) => setHover(true) }
+      onPointerOut={(e) => setHover(false) }
     >
       <boxGeometry args={[1, 1, 1]}/>
       <meshPhongMaterial color={"hotpink"} />
