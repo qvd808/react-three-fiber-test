@@ -13,7 +13,6 @@ export default function Scene() {
     useFrame((e) => {
         const x = orbitalControlRef.current.getAzimuthalAngle();
         const controlValue = x + Math.PI
-        console.log(x % Math.PI + Math.PI)
 
         if (!hover) {
             if ( Math.PI/4 < controlValue & controlValue < Math.PI/2 + Math.PI/4){
